@@ -15,7 +15,7 @@ const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
       setIsLoading(false);
     });
     return unsub;
-  });
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, isLoading }}>

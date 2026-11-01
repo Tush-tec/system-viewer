@@ -8,6 +8,8 @@ router.get("/snapshot", async (req, res) => {
   try {
     const data = await monitor.snapShot();
 
+    // console.log("data === recieve 11 =======================", data);
+
     return res.json(data);
   } catch (err) {
     return res.status(err.statusCode || 500).json({

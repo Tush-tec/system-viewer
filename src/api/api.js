@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
@@ -8,8 +8,7 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use(async (config) => {
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const user = getAuth().currentUser;
   if (user) {
     const token = await user.getIdToken();
     config.headers.Authorization = `Bearer ${token}`;
