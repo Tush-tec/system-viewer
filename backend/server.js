@@ -5,7 +5,10 @@ import indexRouter from "./route/index.route.js";
 const app = express();
 const PORT = 8000;
 
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://system-viewer-three.vercel.app/",
+];
 
 const corsOptions = {
   origin: function (origin, callback) {
