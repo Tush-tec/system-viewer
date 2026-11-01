@@ -49,7 +49,7 @@ const Signup = () => {
             Create your account
           </h1>
           <p className="mt-2 text-sm text-cream-dim">
-            Join Binaire Freznel — precision in every detail.
+            Join us To Know more about your task-details.
           </p>
         </div>
 

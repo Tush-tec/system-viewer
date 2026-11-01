@@ -10,29 +10,29 @@ import Signin from "./pages/Auth/Signin";
 function Guard({ children }) {
   const { user, isLoading } = useAuth();
 
-  console.log("user", user);
+  console.log("loading state", isLoading);
 
   if (isLoading) return <p style={{ padding: 24 }}>Loading…</p>;
   return user ? children : <Navigate to="/signin" />;
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route
-            path="/"
-            element={
-              <Guard>
-                <Dashboard />
-              </Guard>
-            }
-          />
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <BrowserRouter>
+    <AuthProvider>
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route
+          path="/"
+          element={
+            <Guard>
+              <Dashboard />
+            </Guard>
+          }
+        />
+      </Routes>
+    </AuthProvider>
+  </BrowserRouter>,
+  // </React.StrictMode>,
 );

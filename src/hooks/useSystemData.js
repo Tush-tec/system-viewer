@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { monitoringSnapShot } from "../api/api";
 
-const useSystemData = (pollInterval = 2000) => {
+const useSystemData = (pollInterval = 10000) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

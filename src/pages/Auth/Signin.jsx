@@ -31,7 +31,7 @@ const Signin = () => {
     setLoading(true);
     try {
       await AuthService.signIn(email, password);
-      navigate("/"); // Redirect to Dashboard on success
+      navigate("/");
     } catch (err) {
       // Clean up Firebase error messages
       setError(err.message.replace("Firebase: ", ""));

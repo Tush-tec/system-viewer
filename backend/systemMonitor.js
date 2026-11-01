@@ -116,16 +116,21 @@ class GpuProvider extends BaseProvider {
   }
 
   format(g) {
-    const c = g?.controllers?.[0];
+    const c = g?.controllers || [];
+
+    console.log("gpu about ====121", c);
+
+    const list = c.map((item) => item);
+
     if (!c) return null;
     return {
-      model: c.model,
-      vendor: c.vendor,
-      load: round(c.utilizationGpu, 0),
-      temp: round(c.temperatureGpu, 0),
-      vramTotalMB: round(c.memoryTotal ?? c.vram, 0),
-      vramUsedMB: round(c.memoryUsed, 0),
-      sharedGB: round((c.memoryTotal ?? 0) / 1024, 2),
+      model: list.model,
+      vendor: list.vendor,
+      load: round(list.utilizationGpu, 0),
+      temp: round(list.temperatureGpu, 0),
+      vramTotalMB: round(list.memoryTotal ?? c.vram, 0),
+      vramUsedMB: round(list.memoryUsed, 0),
+      sharedGB: round((list.memoryTotal ?? 0) / 1024, 2),
     };
   }
 }

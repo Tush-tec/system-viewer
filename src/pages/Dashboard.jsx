@@ -156,11 +156,29 @@ export default function Dashboard() {
 
   //   Network =
   const n = data?.network || {};
-  const ipv4 = n.ipv4 || "";
+
+  // formats bytes per second
+  const fmtBps = (bps) => {
+    if (bps == null) return "0 Byte/s";
+    if (bps < 1024) return `${bps.toFixed(0)} Byte/s`;
+    if (bps < 1024 * 1024) return `${(bps / 1024).toFixed(1)} KiB/s`;
+    return `${(bps / 1024 / 1024).toFixed(2)} MiB/s`;
+  };
+
+  // formats bits per second
+  const fmtBits = (b) => {
+    if (b == null) return "0 bitps";
+    if (b < 1000) return `${b.toFixed(0)} bitps`;
+    return `${(b / 1000).toFixed(1)} kbitps`;
+  };
 
   // System
   const sys = data?.system || {};
-  const cpuBrand = sys.cpuBrand;
+
+  // Disk Storage ======
+  const disk = data?.disk || {};
+
+  console.log("disk -======= 167", disk);
 
   if (isLoading && !data) {
     return (
@@ -216,7 +234,7 @@ export default function Dashboard() {
         <Box
           className="a-cores"
           titles={[]}
-          right={["i5-6200U", "2.7 GHz"]}
+          right={[sys?.cpuBrand || "", sys.cpuMaxGHz]}
           style={{ paddingTop: 2 }}
         >
           <div className="bt-cores">
@@ -351,7 +369,12 @@ export default function Dashboard() {
         </Box>
 
         {/* ═════════ NET ═════════ */}
-        <Box className="a-net" titles={[<em key="n">net</em>]} right={[ipv4]}>
+        {/* ═════════ NET ═════════ */}
+        <Box
+          className="a-net"
+          titles={[<em key="n">net</em>]}
+          right={[n.ip4 || ""]}
+        >
           <div className="bt-netwrap">
             <div className="bt-netgraph">
               <Graph
@@ -371,17 +394,27 @@ export default function Dashboard() {
             <div className="bt-netinfo">
               <div className="hd">download</div>
               <div>
-                ▼ 0 Byte/s <span>(0 bitps)</span>
+                ▼ {fmtBps(n.rxBps)} <span>({fmtBits(n.rxBits)})</span>
               </div>
               <div>
-                ▼ Total: <span className="w">3.65 GiB</span>
+                ▼ Total:{" "}
+                <span className="w">
+                  {n.rxTotalGB != null
+                    ? `${n.rxTotalGB.toFixed(2)} GiB`
+                    : "N/A"}
+                </span>
               </div>
               <div className="gap" />
               <div>
-                ▲ 49 Byte/s <span>(392 bitps)</span>
+                ▲ {fmtBps(n.txBps)} <span>({fmtBits(n.txBits)})</span>
               </div>
               <div>
-                ▲ Total: <span className="w">99.4 MiB</span>
+                ▲ Total:{" "}
+                <span className="w">
+                  {n.txTotalMB != null
+                    ? `${n.txTotalMB.toFixed(1)} MiB`
+                    : "N/A"}
+                </span>
               </div>
               <div className="hd">upload</div>
             </div>
